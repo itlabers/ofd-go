@@ -1,4 +1,4 @@
-module ofd-go
+module github.com/itlabers/ofd-go
 
 go 1.17
 
