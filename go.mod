@@ -1,4 +1,4 @@
-module ofd
+module ofd-go
 
 go 1.17
 
