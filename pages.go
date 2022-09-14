@@ -44,7 +44,6 @@ func (pages *Pages) GetPageById(pageId string) (*Page, error) {
 			if err != nil {
 				return nil, err
 			}
-			return nil, err
 		}
 		var page Page
 		if err := xml.Unmarshal(content, &page); err != nil {
