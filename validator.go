@@ -1,12 +1,13 @@
 package ofd
 
 import (
-	std "encoding/asn1"
 	"math/big"
 
 	"github.com/itlabers/crypto/sm/sm2"
 	"github.com/itlabers/crypto/sm/sm3"
 	smx509 "github.com/itlabers/crypto/x509"
+	"golang.org/x/crypto/cryptobyte"
+	"golang.org/x/crypto/cryptobyte/asn1"
 )
 
 const (
@@ -59,18 +60,28 @@ func (common *CommonValidator) Verify(cert []byte, msg []byte, signature []byte)
 			S *big.Int
 		}
 		var sign Sign
-		if _, err := std.Unmarshal(signature, &sign); err != nil {
-			return false, err
-		} else {
-			ff, _ := new(big.Int).SetString(MAX, 16)
-			if sign.R.Sign() == -1 {
-				sign.R.And(sign.R, ff)
-			}
-			if sign.S.Sign() == -1 {
-				sign.S.And(sign.S, ff)
-			}
-			result := sm2.Verify(pk, "", msg, hashed, sign.R, sign.S)
-			return result, nil
+		sig := cryptobyte.String(signature)
+		var ses_signature cryptobyte.String
+		sig.ReadASN1(&ses_signature, asn1.SEQUENCE)
+
+		var r cryptobyte.String
+		ses_signature.ReadASN1(&r, asn1.INTEGER)
+
+		var s cryptobyte.String
+		ses_signature.ReadASN1(&s, asn1.INTEGER)
+
+		sign.R = new(big.Int).SetBytes(r)
+		sign.S = new(big.Int).SetBytes(s)
+
+		ff, _ := new(big.Int).SetString(MAX, 16)
+		if sign.R.Sign() == -1 {
+			sign.R.And(sign.R, ff)
 		}
+		if sign.S.Sign() == -1 {
+			sign.S.And(sign.S, ff)
+		}
+		result := sm2.Verify(pk, "", msg, hashed, sign.R, sign.S)
+		return result, nil
 	}
+
 }

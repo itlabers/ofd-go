@@ -142,11 +142,10 @@ func (signature Signature) verifySign() (bool, error) {
 			encryptedDigest := sign.GetEncryptedDigest()
 			validator := signature.Validator
 			result, err := validator.Verify(cert, msg, encryptedDigest)
-			if err != nil {
-				break
+			if !result || err != nil {
+				return false, err
 			} else {
-				fmt.Printf("%v  ", result)
-
+				continue
 			}
 		}
 

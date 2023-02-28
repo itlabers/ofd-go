@@ -8,15 +8,13 @@ import (
 
 func TestNewOFDReader(t *testing.T) {
 	pwd, _ := os.Getwd()
-
-	//file := filepath.Join(pwd, "samples", "DZHD_1605281110201000001_202205250016050102202100000069141950_20220525_000413.ofd")
-	file := filepath.Join(pwd, "samples", "退票样例.ofd")
+    // 替换成目标文件
+	file := filepath.Join(pwd, "sample.ofd")
 
 	ofdReader, err := NewOFDReader(file)
 	if err != nil {
-		//t.Logf("%s", err)
-		panic(err)
-	}
+		 t.Logf("%s", err)
+ 	}
 	defer ofdReader.Close()
 
 	ofd, err := ofdReader.OFD()

@@ -11,42 +11,10 @@ OFD标准有一系列技术优势。
 3. 标准可支持国产密码算法，是文档安全性的有力保证，也是文件具有法律效力的基本条件
 4. 标准是自主可控的，国家再有需要对OFD做上面提到的扩展时，特别是在我国党政军严肃类文档应用领域，可以不受控于外部的厂商，我们有自主的标准话语权 
 
-## 参考文档
-
-[信息安全技术 安全电子签章密码技术规范](doc/GBT_38540-2020_信息安全技术_安全电子签章密码技术规范.pdf)
-
-[电子文件存储与交换格式版式文档](doc/GBT_33190-2016_电子文件存储与交换格式版式文档.pdf)
-
-## 样例文档
-
-[光大](samples/2020062290131000005100000000013540122236009.ofd) 
-
-[工行](samples/0200216819200056225_001_21253000001_20220101_acc.ofd) 
-
-[中电财](samples/DZHD_1605281110201000001_202205250016050102202100000069141950_20220525_000413.ofd) 
-
-[浙商银行](samples/bkrs_issuer_20220309_C1030311000455.ofd)
-
-[中国铁路-退票](samples/%E9%80%80%E7%A5%A8%E6%A0%B7%E4%BE%8B.ofd) 
-
-[中国铁路-售票](samples/%E5%94%AE%E7%A5%A8%E6%8D%A2%E5%BC%80%E6%A0%B7%E4%BE%8B.ofd)
-
-## 如何读取OFD文档 
-
-```
-ofdReader, err := NewOFDReader(file)
- if err != nil {
-    panic(err)
- }
- defer ofdReader.Close()
-```
-
-
-[完整测试用例](ofd_reader_test.go)
-
-
 ## 自定义签名验证器
+
 通过实现 Validator 接口 ,初始化的时候加载验证器WithValidator
+
 ```
 ofdReader, err :=NewOFDReader(testpath, WithValidator(XXValidator{}))
 if err != nil {
@@ -130,4 +98,6 @@ func (gm *OtherValidator) Verify(cert []byte, msg []byte, signature []byte) (boo
   目前的ofd-go每天的独立clone在50左右，反映出在市面上有一定的需求，但是除了项目初期有热心人士关注，提出issue,提交一些bug,后续的clone者反馈问题较少,作为发起人，我意识到ofd-go本身还不完善，为了持续推进开源项目，本着"我为人人，人人为我"的精神，现阶段希望征集大家对于ofd-go的需求提案,无论是提交bug、提供ofd测试样本或者是提供产品思路,都希望广泛交流，为此我建了讨论组，感兴趣的可以加群
   
   QQ:628529123
-![QQ群](/images/qq_group.jpg)
+![QQ群](https://github.com/itlabers/ofd-go-reference/blob/master/images/qq_group.jpg)
+
+  
