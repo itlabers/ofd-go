@@ -236,7 +236,7 @@ func (ses_seal_info *SES_Seal_Info) Get_Pictrue() (*SES_ESPictrueInfo, error) {
 	return ses_picture, nil
 }
 func (ses_seal_info *SES_Seal_Info) Get_ExtDatas() (*ExtensionDatas, error) {
-	extDatas, err := New_ExtensionDatas(ses_seal_info.pictrue)
+	extDatas, err := New_ExtensionDatas(ses_seal_info.extDatas)
 	if err != nil {
 		return nil, err
 	}
